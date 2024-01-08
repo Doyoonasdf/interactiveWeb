@@ -49,4 +49,80 @@ header .fa-bars {
   display: none;
 }
 
+figure {
+  width: 100%;
+  height: 60vh;
+  background: #191f26;
+  position: relative;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+figure .banner {
+  width: 70%;
+  height: 100%;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+figure .banner ul {
+  width: 166.6666666667%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+figure .banner ul li {
+  float: left;
+  width: 20%;
+  height: 100%;
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  position: relative;
+}
+figure .banner ul li::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  background: rgba(21, 32, 44, 0.5);
+  position: absolute;
+  left: 0;
+  bottom: -100%;
+  transition: 0.5s;
+}
+figure .banner ul li .txt {
+  width: 80%;
+  position: absolute;
+  left: 10%;
+  top: 60%;
+  transition: 0.5s;
+}
+figure .banner ul li .txt strong {
+  display: block;
+  width: 100%;
+  font: 20px;
+  color: yellow;
+  margin-bottom: 20px;
+  opacity: 0.4;
+  transition: 0.5s;
+}
+figure .banner ul li .txt h2 {
+  width: 100%;
+  font: 24px;
+  letter-spacing: 1px;
+  opacity: 0.5;
+  padding-top: 20px;
+  position: relative;
+  transition: 0.5s;
+}
+figure .banner ul li .txt h2::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 /*# sourceMappingURL=style.css.map */

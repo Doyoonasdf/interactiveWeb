@@ -30,3 +30,91 @@ header {
 		display: none;
 	}
 }
+
+figure {
+	width: 100%;
+	height: 60vh;
+	background: #191f26;
+	position: relative;
+	border-top: 1px solid rgba(255, 255, 255, 0.3);
+
+	.banner {
+		width: 70%;
+		height: 100%;
+		overflow: hidden;
+		position: absolute;
+		top: 0;
+		right: 0;
+
+		ul {
+			//전체 폭 기준으로 3등분한 패널이 5개 좌우로 묶여야 됨
+			// 100% /3 한 값에서 다시 곱하기 5개
+			width: calc(100% / 3 * 5);
+			height: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+
+			li {
+				float: left;
+				width: calc(100% / 5);
+				height: 100%;
+				border-left: 1px solid rgba(255, 255, 255, 0.2);
+				color: #fff;
+				position: relative;
+				// transition: border 0.5s; 보더값 살짝 안보이게 처리
+				//비포요소로 호버막 설정
+				&::before {
+					content: '';
+					width: 100%;
+					height: 100%;
+					background: rgba(21, 32, 44, 0.5);
+					position: absolute;
+					left: 0;
+					bottom: -100%;
+					transition: 0.5s; //아래에서 위로 올라오는 호버모션처리
+				}
+
+				.txt {
+					width: 80%;
+					position: absolute;
+					left: 10%; //넓이가 80%니깐 10%줘야 가운데 중앙으로 옴
+					top: 60%; //살짝 아래쪽에 배치가 되게할거여서
+					transition: 0.5s; //txt도 모션이 일어나야해서 (마우스 올리면 위쪽으로 올라가게)
+
+					strong {
+						display: block;
+						width: 100%;
+						font: 20px;
+						color: yellow;
+						margin-bottom: 20px;
+						opacity: 0.4;
+						transition: 0.5s;
+					}
+
+					h2 {
+						width: 100%;
+						font: 24px;
+						letter-spacing: 1px;
+						opacity: 0.5;
+						padding-top: 20px; //바가 생길 공간을 만들어야해서 패딩탑으로 잡음
+						position: relative;
+						transition: 0.5s;
+
+						//h2비포용으로 바의 회색트랙 만듦
+						&::before {
+							content: '';
+							display: block;
+							width: 100%;
+							height: 2px;
+							background: rgba(255, 255, 255, 0.5);
+							position: absolute;
+							top: 0;
+							left: 0;
+						}
+					}
+				}
+			}
+		}
+	}
+}
