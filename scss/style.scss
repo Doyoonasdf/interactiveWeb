@@ -175,7 +175,32 @@ figure {
 						}
 					}
 				}
+
+				//목록상에서는 2번째지만 실제 화면상에서는 첫번째인 활성화스타일
+				&:nth-of-type(2) {
+					p {
+						opacity: 0.5;
+					}
+					h2 {
+						opacity: 1;
+						span {
+							width: 100%;
+							animation: ani 2s linear 1;
+						}
+					}
+				}
 			}
 		}
 	}
 }
+//스크립트로 모양이 변경돼서 두번째 패널로 나타나게되면은 선이 그어지는 모션작업을 animation으로 처리  ani key 프레임으로 이용
+@keyframes ani {
+	0% {
+		width: 0%;
+	}
+	100% {
+		width: 100%;
+	}
+}
+
+//20240109_만들면서 느낀점 : append prepend 순서를 바꾸다보니 css스타일링도  복잡함

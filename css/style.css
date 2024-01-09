@@ -175,5 +175,24 @@ figure .banner ul li:hover .txt a:hover {
   background: #fff;
   color: #555;
 }
+figure .banner ul li:nth-of-type(2) p {
+  opacity: 0.5;
+}
+figure .banner ul li:nth-of-type(2) h2 {
+  opacity: 1;
+}
+figure .banner ul li:nth-of-type(2) h2 span {
+  width: 100%;
+  animation: ani 2s linear 1;
+}
+
+@keyframes ani {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
 
 /*# sourceMappingURL=style.css.map */
