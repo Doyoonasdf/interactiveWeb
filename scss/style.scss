@@ -192,6 +192,52 @@ figure {
 			}
 		}
 	}
+
+	.controls {
+		width: 30%;
+		padding: 50px;
+		display: flex;
+		justify-content: space-between;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		.auto {
+			display: flex;
+			gap: 20px;
+			color: #fff;
+			li {
+				cursor: pointer;
+				transition: 0.5s;
+				opacity: 0.5;
+
+				&.on {
+					opacity: 1;
+					transform: scale(1.3);
+				}
+			}
+		}
+		.btns {
+			display: flex;
+			gap: 20px;
+			color: #fff;
+
+			li {
+				cursor: pointer;
+
+				i {
+					display: inline-block;
+					transform: scale(1);
+					opacity: 0.5;
+				}
+				//:active 는 사용자가 활성화한 요소(버튼 등)를 나타낸다. 즉 마우스 버튼을 누르는 순간부터 떼는 시점까지를 의미한다.
+				&:active {
+					i {
+						animation: scale 0.2s linear 1; // 0.2초동안 1번만 동작되게
+					}
+				}
+			}
+		}
+	}
 }
 //스크립트로 모양이 변경돼서 두번째 패널로 나타나게되면은 선이 그어지는 모션작업을 animation으로 처리  ani key 프레임으로 이용
 @keyframes ani {
@@ -200,6 +246,17 @@ figure {
 	}
 	100% {
 		width: 100%;
+	}
+}
+
+@keyframes scale {
+	0% {
+		transform: scale(1);
+		opacity: 1;
+	}
+	100% {
+		transform: scale(5);
+		opacity: 0;
 	}
 }
 
