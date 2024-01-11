@@ -36,7 +36,6 @@ function next() {
 	currentNum !== len - 1 ? (nextNum = currentNum + 1) : (nextNum = 0);
 	//만약에 커렌트넘값이 마지막 순번값이 아니면은 더 증가할게 있는거니깐 current_num에서 1을더함 그런게아니면은 넥스트넘은 마지막이여서 할게없는거니깐 처음순번값인 0으로 초기화한다.
 
-	activation(nextNum); //앞으로 활성화될 순번인 nextNum에다가 on 활성화
 	currentNum = nextNum; //이제 순번이 바꼈으니깐 nextNum값이 currentNum값이되야함
 
 	//그와동시에 anime로 list의 위치값을 바꿔준다.
@@ -62,7 +61,6 @@ function prev() {
 	let prevNum = null;
 	currentNum !== 0 ? (prevNum = currentNum - 1) : (prevNum = len - 1);
 	//현재넘이 0이아니면 받을게 있는거니깐 기존의 커렌트넘에서 1을빼야함
-	activation(prevNum);
 	currentNum = prevNum;
 
 	new Anim(list, {
@@ -76,7 +74,8 @@ function prev() {
 		},
 	});
 }
-//현재 활성화 된 것만 on을 붙임
+//2024-01-11 activation함수 수정한 이유 : 현재 1번째를 기준으로 활성화되는 순번을 기억하고있다가 전체페이지갯수대비 현재 몇번째 페이지가 보이는지  카운터 값계산하거나 영상 5개를 깔아놓고나서 5개의 순번에 맞는 영상 출력하기위한 순번을 구현할때 => 순서가 바뀌지않는 고정되어있는 list의 순서값을 계산하기 위해서 activation함수가 필요한것임 (append,prepend로 순서가 계속바뀌는것은 배너인데 배너는 nth-of-type으로 활성화시키고있어서임)
+
 function activation(index) {
 	const currentList = banner.querySelector('ul');
 	//왜 list 변수를 쓰지않고 ul을 찾냐면은. const list = banner.querySelector('ul'); 값을 쓰면 처음에 로딩된 시점에서의 리스트로 고정이 되기때문에 값을 활용하지못함. 그래서 배너에서 ul을 다시 찾아야 좌우버튼을 클릭할때마다 li순번이 바뀌게된다. 즉 바뀐순번 li를 다시 찾으려면은 activation함수가 호출될때마다 새롭게 갱신된 ul을 찾아야할 필요가있다.
