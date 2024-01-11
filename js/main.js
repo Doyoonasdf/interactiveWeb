@@ -6,23 +6,34 @@ const btnPlay = document.querySelector('.play');
 const btnPause = document.querySelector('.pause');
 const showNum = 3; //전체 패널갯수는 5개지만 화면에 보이는 패널은 3개니깐
 const speed = 500;
+const interval = 3000;
 const len = list.children.length; //전체 패널의 갯수
 let enableClick = true; //재이벤트방지구문
 //버튼클릭할때 모션중 재이벤트방지해야함 왜? 일반 css이용해서 append prepend이용해서 싸스로만 동작이되는거면 굳이 재이벤트방지 안해도 흐트러지는게 없는데 좌우버튼 클릭할때마다 css가 아닌 requestAnimationFrame으로 만든  anime.js를 이용해서 동작할거기때문에 광클하면 모션이 엉킴
 let currentNum = 0; //현재 활성화 된 패널
 
+let timer = null; //전역으로 필요한 이유 : setInterval에 timer 값을 넣어서 clearInterval로 자동정지 롤링풀수있게
+
 init();
 //패널이 양옆으로 배치되도록 처리
 
+setTimeout(startRolling, interval);
+//startRolling(); <- 이렇게 하면 처음 로딩됐을때 바로 2번이 넘어가서 보기 안좋으니깐 스타트롤링자체를 Interval 간격뒤에 실행이 되도록 해야함
+
 btnNext.addEventListener('click', () => {
 	next();
+	stopRolling(); //좌우버튼을 클릭할때도 정지가 되어야하니깐
 });
 
 // btnNext.addEventListener('click', next());
 btnPrev.addEventListener('click', () => {
 	prev();
+	stopRolling(); //좌우버튼을 클릭할때도 정지가 되어야하니깐
 });
 //패널에서 슬라이더 구현할때 보면 양옆에 여분의 패널이 있어야함 실제로 화면에 창을 올리게되면 2번째 패널이 활성화됨(목록상에서는 2번째지만 실제 화면상에선 첫번째인 활성화) 그래서 위치값을  스크립트가 로딩되면 li 넓이값을 계산해서 리스트 자체를 앞으로 뺄수있게 init을 이용해서 앞쪽으로 빠져있게 만들어야함
+
+btnPlay.addEventListener('click', startRolling); //인수 전달할게없으니깐 바로 클릭하면 바로 호출되게
+btnPause.addEventListener('click', stopRolling);
 function init() {
 	list.style.left = -100 / showNum + '%';
 	list.prepend(list.lastElementChild);
@@ -38,16 +49,14 @@ function next() {
 
 	currentNum = nextNum; //이제 순번이 바꼈으니깐 nextNum값이 currentNum값이되야함
 
-	//그와동시에 anime로 list의 위치값을 바꿔준다.
-
-	// 현재 위치값이 (-100/showNum) *1 만큼 마이너스 간 상태니깐 그 상태에서 한 번 더 앞으로 가려면은 *2
-
-	//모든 모션이 끝나면 초기화 시켜줘야해서 콜백으로 처리
 	new Anim(list, {
+		//그와동시에 anime로 list의 위치값을 바꿔준다.
 		prop: 'left',
 		value: (-100 / showNum) * 2 + '%',
+		// 현재 위치값이 (-100/showNum) *1 만큼 마이너스 간 상태니깐 그 상태에서 한 번 더 앞으로 가려면은 *2
 		duration: speed,
 		callback: () => {
+			//모든 모션이 끝나면 초기화 시켜줘야해서 콜백으로 처리
 			list.append(list.firstElementChild);
 			list.style.left = -100 / showNum + '%';
 			enableClick = true; // enableClick(true) 라고 하면 동작안됨
@@ -82,4 +91,19 @@ function activation(index) {
 
 	for (const el of currentList.children) el.classList.remove('on');
 	currentList.children[index].classList.add('on');
+}
+
+//play와 pause버튼을 눌렀을때 자동으로 롤링시작/정지하는 기능
+function startRolling() {
+	next(); //스타트롤링이 시작되면 자동으로 한 번 넘어가고
+	timer = setInterval(next, interval); //	 그 후에 interval간격대로 넘어가게
+	//로딩바가 그어지는 @keyframes ani 는 2초로 했는데, 여기서는 3초로하는이유? 3초가 정밀하지 않아서 3초로 걸어도 실제로는 2.5초정도임 선이 빨리 그어지는게 중요하니깐 2초 그 후에 작업되도록
+	btnPlay.classList.add('on'); //스타트롤링이 시작되면 자동적으로 재생버튼 활성화되도록
+	btnPause.classList.remove('on');
+}
+
+function stopRolling() {
+	clearInterval(timer); //자동롤링 끊어줌
+	btnPause.classList.add('on');
+	btnPlay.classList.remove('on');
 }
