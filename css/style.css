@@ -99,6 +99,25 @@ figure .bgs video {
 figure .bgs video.on {
   opacity: 0.4;
 }
+figure .paging {
+  color: #bbb;
+  font-size: 30px;
+  letter-spacing: 1px;
+  position: absolute;
+  top: -50px;
+  right: 10vw;
+}
+figure .paging strong {
+  color: #fff;
+  font-weight: normal;
+  opacity: 0.7;
+}
+figure .paging span {
+  color: #ddd;
+  display: inline-block;
+  opacity: 0.6;
+  transform: scale(0.5) translateX(-20px) translateY(10px);
+}
 figure .banner {
   width: 70%;
   height: 100%;

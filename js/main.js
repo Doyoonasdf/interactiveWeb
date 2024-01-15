@@ -1,11 +1,14 @@
 const banner = document.querySelector('.banner');
 const list = banner.querySelector('ul');
+//const [btnPrev, btnNext] = document.querySelector('.btns').children;
 const btnPrev = document.querySelector('.prev');
 const btnNext = document.querySelector('.next');
 const btnPlay = document.querySelector('.play');
 const btnPause = document.querySelector('.pause');
 const tits = document.querySelectorAll('.tits h2');
 const vids = document.querySelectorAll('.bgs video');
+const paging = document.querySelector('.paging');
+const [counter, total] = paging.children; //strong과 span태그
 const showNum = 3; //전체 패널갯수는 5개지만 화면에 보이는 패널은 3개니깐
 const speed = 500;
 const interval = 3000; //자동으로 전환되는 간격
@@ -42,6 +45,7 @@ btnPause.addEventListener('click', stopRolling);
 function init() {
 	list.style.left = -100 / showNum + '%';
 	list.prepend(list.lastElementChild);
+	total.innerText = len < 10 ? '0' + len : len;
 }
 //현재활성화되어있는 패널을 기점으로 다음 활성화될 패널 순번을 구한다.
 //클릭을 하면은 enableClick이 false
@@ -55,6 +59,7 @@ function next() {
 	//만약에 커렌트넘값이 마지막 순번값이 아니면은 더 증가할게 있는거니깐 current_num에서 1을더함 그런게아니면은 넥스트넘은 마지막이여서 할게없는거니깐 처음순번값인 0으로 초기화한다.
 	currentNum = nextNum; //이제 순번이 바꼈으니깐 nextNum값이 currentNum값이되야함
 	activation(currentNum);
+	setCounter(currentNum);
 	new Anim(list, {
 		//그와동시에 anime로 list의 위치값을 바꿔준다.
 		prop: 'left',
@@ -78,6 +83,7 @@ function prev() {
 	// 현재 이미지의 인덱스가 0이 아니라면 이전 이미지의 인덱스를 currentNum - 1로 설정하고, 현재 이미지의 인덱스가 0이면 마지막 이미지의 인덱스로 설정
 	currentNum = prevNum;
 	activation(currentNum);
+	setCounter(currentNum);
 	new Anim(list, {
 		prop: 'left',
 		value: (-100 / showNum) * 0 + '%', //  이동 크기를 0으로 설정하여 이미지를 초기 위치로 되돌리는 역할로 이미지를 원래 위치로 되돌려서 이전 이미지가 다시 보이게끔 하는 것  즉 현재가 [1,2,3] 이면 실행하면 [3,1,2]
@@ -117,4 +123,8 @@ function stopRolling() {
 	clearInterval(timer); //자동롤링 끊어줌
 	btnPause.classList.add('on');
 	btnPlay.classList.remove('on');
+}
+
+function setCounter(num) {
+	counter.innerText = '0' + (num + 1);
 }

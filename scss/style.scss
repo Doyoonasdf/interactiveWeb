@@ -84,6 +84,26 @@ figure {
 			}
 		}
 	}
+
+	.paging {
+		color: #bbb;
+		font-size: 30px;
+		letter-spacing: 1px;
+		position: absolute;
+		top: -50px;
+		right: 10vw;
+		strong {
+			color: #fff;
+			font-weight: normal;
+			opacity: 0.7;
+		}
+		span {
+			color: #ddd;
+			display: inline-block;
+			opacity: 0.6;
+			transform: scale(0.5) translateX(-20px) translateY(10px);
+		}
+	}
 	.banner {
 		width: 70%;
 		height: 100%;
