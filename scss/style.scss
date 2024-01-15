@@ -37,7 +37,53 @@ figure {
 	background: #191f26;
 	position: relative;
 	border-top: 1px solid rgba(255, 255, 255, 0.3);
+	.tits {
+		height: 12vw;
+		position: absolute;
+		top: -5vw;
+		left: 10vw;
+		h2 {
+			position: absolute;
+			top: 0;
+			left: 0;
+			font-weight: bold;
+			font-size: 5vw;
+			line-height: 1;
+			color: rgba(255, 255, 255, 0.2);
+			transform: translateX(-100px);
+			opacity: 0;
+			transition: 1s;
 
+			&.on {
+				opacity: 1;
+				transform: translateX(0px);
+			}
+		}
+	}
+
+	.bgs {
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+		position: relative;
+		background: #191f26;
+		opacity: 1;
+
+		video {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			opacity: 0;
+			transition: opacity 2s;
+
+			&.on {
+				opacity: 0.4;
+			}
+		}
+	}
 	.banner {
 		width: 70%;
 		height: 100%;

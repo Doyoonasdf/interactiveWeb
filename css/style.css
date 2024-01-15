@@ -56,6 +56,49 @@ figure {
   position: relative;
   border-top: 1px solid rgba(255, 255, 255, 0.3);
 }
+figure .tits {
+  height: 12vw;
+  position: absolute;
+  top: -5vw;
+  left: 10vw;
+}
+figure .tits h2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-weight: bold;
+  font-size: 5vw;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.2);
+  transform: translateX(-100px);
+  opacity: 0;
+  transition: 1s;
+}
+figure .tits h2.on {
+  opacity: 1;
+  transform: translateX(0px);
+}
+figure .bgs {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  background: #191f26;
+  opacity: 1;
+}
+figure .bgs video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 2s;
+}
+figure .bgs video.on {
+  opacity: 0.4;
+}
 figure .banner {
   width: 70%;
   height: 100%;

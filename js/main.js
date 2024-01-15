@@ -4,6 +4,8 @@ const btnPrev = document.querySelector('.prev');
 const btnNext = document.querySelector('.next');
 const btnPlay = document.querySelector('.play');
 const btnPause = document.querySelector('.pause');
+const tits = document.querySelectorAll('.tits h2');
+const vids = document.querySelectorAll('.bgs video');
 const showNum = 3; //전체 패널갯수는 5개지만 화면에 보이는 패널은 3개니깐
 const speed = 500;
 const interval = 3000; //자동으로 전환되는 간격
@@ -52,7 +54,7 @@ function next() {
 	currentNum !== len - 1 ? (nextNum = currentNum + 1) : (nextNum = 0);
 	//만약에 커렌트넘값이 마지막 순번값이 아니면은 더 증가할게 있는거니깐 current_num에서 1을더함 그런게아니면은 넥스트넘은 마지막이여서 할게없는거니깐 처음순번값인 0으로 초기화한다.
 	currentNum = nextNum; //이제 순번이 바꼈으니깐 nextNum값이 currentNum값이되야함
-
+	activation(currentNum);
 	new Anim(list, {
 		//그와동시에 anime로 list의 위치값을 바꿔준다.
 		prop: 'left',
@@ -75,7 +77,7 @@ function prev() {
 	currentNum !== 0 ? (prevNum = currentNum - 1) : (prevNum = len - 1);
 	// 현재 이미지의 인덱스가 0이 아니라면 이전 이미지의 인덱스를 currentNum - 1로 설정하고, 현재 이미지의 인덱스가 0이면 마지막 이미지의 인덱스로 설정
 	currentNum = prevNum;
-
+	activation(currentNum);
 	new Anim(list, {
 		prop: 'left',
 		value: (-100 / showNum) * 0 + '%', //  이동 크기를 0으로 설정하여 이미지를 초기 위치로 되돌리는 역할로 이미지를 원래 위치로 되돌려서 이전 이미지가 다시 보이게끔 하는 것  즉 현재가 [1,2,3] 이면 실행하면 [3,1,2]
@@ -90,11 +92,13 @@ function prev() {
 //2024-01-11 activation함수 수정한 이유 : 현재 1번째를 기준으로 활성화되는 순번을 기억하고있다가 전체페이지갯수대비 현재 몇번째 페이지가 보이는지  카운터 값계산하거나 영상 5개를 깔아놓고나서 5개의 순번에 맞는 영상 출력하기위한 순번을 구현할때 => 순서가 바뀌지않는 고정되어있는 list의 순서값을 계산하기 위해서 activation함수가 필요한것임 (append,prepend로 순서가 계속바뀌는것은 배너인데 배너는 nth-of-type으로 활성화시키고있어서임)
 
 function activation(index) {
-	const currentList = banner.querySelector('ul');
+	// const currentList = banner.querySelector('ul');
 	//왜 list 변수를 쓰지않고 ul을 찾냐면은. const list = banner.querySelector('ul'); 값을 쓰면 처음에 로딩된 시점에서의 리스트로 고정이 되기때문에 값을 활용하지못함. 그래서 배너에서 ul을 다시 찾아야 좌우버튼을 클릭할때마다 li순번이 바뀌게된다. 즉 바뀐순번 li를 다시 찾으려면은 activation함수가 호출될때마다 새롭게 갱신된 ul을 찾아야할 필요가있다.
 
-	for (const el of currentList.children) el.classList.remove('on');
-	currentList.children[index].classList.add('on');
+	for (const el of tits) el.classList.remove('on');
+	for (const el of vids) el.classList.remove('on');
+	tits[index].classList.add('on');
+	vids[index].classList.add('on');
 }
 
 //play와 pause버튼을 눌렀을때 자동으로 롤링시작/정지하는 기능
