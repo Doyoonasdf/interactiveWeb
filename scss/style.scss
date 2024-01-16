@@ -305,7 +305,25 @@ figure {
 		}
 	}
 }
+
+.mask {
+	width: 100%;
+	height: 100vh;
+	background: #191f26;
+	// overflow: hidden;
+	position: fixed;
+	top: 0;
+	left: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	img {
+		width: 600px;
+		max-width: 100%;
+	}
+}
 //스크립트로 모양이 변경돼서 두번째 패널로 나타나게되면은 선이 그어지는 모션작업을 animation으로 처리  ani key 프레임으로 이용
+
 @keyframes ani {
 	0% {
 		width: 0%;
