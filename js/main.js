@@ -6,22 +6,28 @@ const btnNext = document.querySelector('.next');
 const btnPlay = document.querySelector('.play');
 const btnPause = document.querySelector('.pause');
 const tits = document.querySelectorAll('.tits h2');
-const vids = document.querySelectorAll('.bgs video');
+// const vids = document.querySelectorAll('.bgs video');
+const mask = document.querySelector('.mask');
+const bgFrame = document.querySelector('.bgs');
 const paging = document.querySelector('.paging');
 const [counter, total] = paging.children; //strong과 span태그
+const vidData = ['vid1.mp4', 'vid2.mp4', 'vid3.mp4', 'vid4.mp4', 'vid5.mp4'];
 const showNum = 3; //전체 패널갯수는 5개지만 화면에 보이는 패널은 3개니깐
 const speed = 500;
 const interval = 3000; //자동으로 전환되는 간격
 const len = list.children.length; //전체 패널의 갯수
 let enableClick = true; //재이벤트방지구문
 //버튼클릭할때 모션중 재이벤트방지해야함 왜? 일반 css이용해서 append prepend이용해서 싸스로만 동작이되는거면 굳이 재이벤트방지 안해도 흐트러지는게 없는데 좌우버튼 클릭할때마다 css가 아닌 requestAnimationFrame으로 만든  anime.js를 이용해서 동작할거기때문에 광클하면 모션이 엉킴
+
+let vids = null;
+let vidCount = 0;
 let currentNum = 0; //현재 활성화 된 패널의 인덱스를 나타냄
 
 let timer = null; //전역으로 필요한 이유 : setInterval에 timer 값을 넣어서 clearInterval로 자동정지 롤링풀수있게
 
 init();
 //패널이 양옆으로 배치되도록 처리
-
+createVid();
 setTimeout(startRolling, interval); //setTimeout는 특정 작업이 나중에 실행되도록 예약할 때 사용
 //startRolling(); <- 이렇게 하면 처음 로딩됐을때 바로 2번이 넘어가서 보기 안좋으니깐 스타트롤링자체를 Interval 간격뒤에 실행이 되도록 해야함
 
@@ -47,8 +53,36 @@ function init() {
 	list.prepend(list.lastElementChild);
 	total.innerText = len < 10 ? '0' + len : len;
 }
+//동적으로 비디오 태그 생성
+function createVid() {
+	let tags = '';
+	vidData.forEach((vid) => (tags += `<video src='vids/${vid}' loop muted autoplay></video>>`));
+	bgFrame.innerHTML = tags;
+
+	//돔이 완성되자마자
+
+	vids = bgFrame.querySelectorAll('video'); //vids에다가 video 담아놓기
+	vids.forEach((vid) => {
+		vid.onloadeddata = () => {
+			// onloadeddata 영상의 로딩이완료되는지확인하는 이벤트를 이용해서 영상소스가 캐싱이 완료가 되면은
+			vidCount++;
+			console.log(vidCount);
+
+			if (vidCount === vidData.length) {
+				new Anim(mask, {
+					prop: 'opacity',
+					value: 0,
+					duration: 1000,
+					callback: () => mask.remove(),
+				});
+			}
+		};
+	});
+}
+
 //현재활성화되어있는 패널을 기점으로 다음 활성화될 패널 순번을 구한다.
 //클릭을 하면은 enableClick이 false
+
 function next() {
 	if (!enableClick) return; //트루가 아니면 모션중인거니깐 리턴
 	enableClick = false; //이미지 전환 중에는 클릭을 비활성화해야하니깐
