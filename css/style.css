@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap");
 * {
   margin: 0;
   padding: 0;
@@ -319,6 +320,50 @@ figure .controls .btns li:active i {
   100% {
     transform: scale(5);
     opacity: 0;
+  }
+}
+@media screen and (max-width: 1159px) {
+  header #gnb {
+    display: none;
+  }
+  header .fa-bars {
+    display: block;
+  }
+  figure .tits {
+    display: none;
+  }
+  figure .banner {
+    width: 100%;
+  }
+  figure .controls {
+    width: 40%;
+    bottom: 100%;
+    padding: 20px 10vw;
+  }
+}
+@media screen and (max-width: 669px) {
+  figure .tits {
+    display: inline-block;
+  }
+  figure .tits h2 {
+    font-size: 10vw;
+    top: -10vw;
+  }
+  figure .controls {
+    width: 100%;
+    bottom: calc(100% + 20vw);
+  }
+  figure .paging {
+    display: none;
+  }
+  figure .banner ul li .txt h2 {
+    text-indent: -1000px;
+  }
+  figure .banner ul li .txt p {
+    display: none;
+  }
+  figure .banner ul li .txt a {
+    width: 100%;
   }
 }
 

@@ -346,3 +346,58 @@ figure {
 }
 
 //20240109_만들면서 느낀점 : append prepend 순서를 바꾸다보니 css스타일링도  복잡함
+
+@media screen and (max-width: 1159px) {
+	header {
+		#gnb {
+			display: none;
+		}
+		.fa-bars {
+			display: block;
+		}
+	}
+	figure {
+		.tits {
+			display: none;
+		}
+		.banner {
+			width: 100%;
+		}
+		.controls {
+			width: 40%;
+			bottom: 100%;
+			padding: 20px 10vw;
+		}
+	}
+}
+
+@media screen and (max-width: 669px) {
+	figure {
+		.tits {
+			display: inline-block;
+			h2 {
+				font-size: 10vw;
+				top: -10vw;
+			}
+		}
+		.controls {
+			width: 100%;
+			bottom: calc(100% + 20vw); //tits의 크기만큼 위로 올리려고 20vw
+		}
+
+		.paging {
+			display: none;
+		}
+		.banner ul li .txt {
+			h2 {
+				text-indent: -1000px; //아예안보이게
+			}
+			p {
+				display: none;
+			}
+			a {
+				width: 100%;
+			}
+		}
+	}
+}

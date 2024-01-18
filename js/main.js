@@ -79,7 +79,7 @@ function createVid() {
 		};
 	});
 
-	vids[0].classList.add('on'); //처음에 빈 비디오화면이 떠서 문구 추가
+	vids[0].classList.add('on'); //처음에 빈 비디오화면이 떠서, 첫번째 vid영상에 on추가
 }
 
 //현재활성화되어있는 패널을 기점으로 다음 활성화될 패널 순번을 구한다.
