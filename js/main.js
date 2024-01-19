@@ -57,29 +57,31 @@ function init() {
 function createVid() {
 	let tags = '';
 	vidData.forEach((vid) => (tags += `<video src='vids/${vid}' loop muted autoplay></video>>`));
-	bgFrame.innerHTML = tags;
+	//vid는 vidData 배열의 각 요소 / forEach 메서드의 콜백 함수는 각 배열 요소에 대해 한 번씩 호출되어  이때 해당 요소가 함수의 매개변수 vid로 전달 => HTML 비디오 태그를 생성
+	bgFrame.innerHTML = tags; // innerHTML을 사용한 이유 ?  tags에 저장된 문자열이 HTML 태그들을 포함 하고있음 innerText를 쓰면은 , HTML 태그를 텍스트로 취급하여 태그들이 그대로 표시
 
 	//돔이 완성되자마자
 
-	vids = bgFrame.querySelectorAll('video'); //vids에다가 video 담아놓기
+	vids = bgFrame.querySelectorAll('video'); //video태그를 vids 변수에 담아놓기
 	vids.forEach((vid) => {
 		vid.onloadeddata = () => {
-			// onloadeddata 영상의 로딩이완료되는지확인하는 이벤트를 이용해서 영상소스가 캐싱이 완료가 되면은
-			vidCount++;
+			// 비디오의 데이터가 최소한 한 번 로드되고 재생할 수 있는 상태로 변했을 때 발생 + 비디오가 로드된 후에 특정 동작을 수행하고자 할 때 사용
+			// oonloadeddata 이벤트는 비디오가 로드되어 재생 가능한 상태로 변했을 때의 시점을 가리키며, 이때 브라우저는 해당 비디오 데이터를 캐시에 저장 / 캐싱은 데이터나 리소스를 임시로 저장하여 나중에 동일한 데이터에 대한 요청이 있을 때 빠르게 응답할 수 있도록 하는 메커니즘 /영상소스를 캐싱한다는 것은 비디오 파일을 한 번 로드하고 난 후, 해당 파일을 브라우저의 캐시에 저장하여 다음에 동일한 비디오에 대한 요청이 있을 때 다시 서버에서 다운로드하지 않고 캐시에서 가져와 사용하는 것을 의미
+			vidCount++; //각 비디오 데이터가 로드될때마다 증가시켜서 로드된 비디오의 수를 추적한다.
 			console.log(vidCount);
 
 			if (vidCount === vidData.length) {
 				new Anim(mask, {
 					prop: 'opacity',
-					value: 0,
+					value: 0, //투명도가없음 / 1은 투명도 100%
 					duration: 1000,
-					callback: () => mask.remove(),
+					callback: () => mask.remove(), //DOM에서 완전히 제거.
 				});
 			}
 		};
 	});
 
-	vids[0].classList.add('on'); //처음에 빈 비디오화면이 떠서, 첫번째 vid영상에 on추가
+	vids[0].classList.add('on'); //처음에 빈 비디오화면이 떠서, 첫번째 vid영상에 on추가 => on 클래스가 추가되지 않으면, 초기에는 비디오에 어떠한 스타일이나 표시 설정이 없는 상태가 되어 빈 비디오 화면이 나타남. on 클래스는 초기에 비디오를 화면에 표시하도록함.
 }
 
 //현재활성화되어있는 패널을 기점으로 다음 활성화될 패널 순번을 구한다.
